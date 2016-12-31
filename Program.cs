@@ -26,9 +26,9 @@ namespace MediatRGettingStarted
             await writer.WriteLineAsync("---------------");
 
             await writer.WriteLineAsync("Sending Ping...");
-            var pong = await mediator.SendAsync(new Ping { Message = "Ping" });
+            var pong = await mediator.SendAsync(new PingCommand.Ping { Message = "Ping" });
 
-            mediator.Publish(new Pinged());
+            mediator.Publish(new PingedNotification.PingedNotificationRequest());
 
             await writer.WriteLineAsync("Received: " + pong.Message);
         }
