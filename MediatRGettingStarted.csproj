@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PingedNotificationHandler.cs" />
+    <Compile Include="Pinged.cs" />
     <Compile Include="PingRequestHandler.cs" />
     <Compile Include="Ping.cs" />
     <Compile Include="Pong.cs" />
