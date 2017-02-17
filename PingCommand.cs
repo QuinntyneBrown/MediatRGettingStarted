@@ -6,7 +6,7 @@ namespace MediatRGettingStarted
 {
     public class PingCommand
     {
-        public class Ping : IAsyncRequest<Pong>
+        public class Ping : IRequest<Pong>
         {
             public string Message { get; set; }
         }
@@ -19,7 +19,17 @@ namespace MediatRGettingStarted
         public class PingRequestHandler 
             :IAsyncRequestHandler<Ping,Pong>
         {
-            public async Task<Pong> Handle(Ping message) => await Task.FromResult(new Pong());
+            public PingRequestHandler(IMediator mediator)
+            {
+                _mediator = mediator;
+            }
+
+            public async Task<Pong> Handle(Ping message) {
+                var response =  await _mediator.Send(new ChildPingCommand.ChildPingRequest());
+                return new Pong();
+            }
+
+            private readonly IMediator _mediator;
         }
     }
 }

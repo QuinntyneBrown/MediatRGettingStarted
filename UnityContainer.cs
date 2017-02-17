@@ -10,12 +10,12 @@ namespace MediatRGettingStarted
         public static IUnityContainer GetContainer()
         {
             var container = new UnityContainer();
+            container.RegisterInstance(Console.Out);
+
             container.RegisterType<IMediator, Mediator>();
             container.RegisterTypes(AllClasses.FromAssemblies(typeof(UnityConfiguration).Assembly), WithMappings.FromAllInterfaces, GetName, GetLifetimeManager);
-            container.RegisterInstance(Console.Out);
-            container.RegisterInstance<SingleInstanceFactory>(t => container.Resolve(t));
+            container.RegisterInstance<SingleInstanceFactory>(t => container.IsRegistered(t) ? container.Resolve(t) : null);
             container.RegisterInstance<MultiInstanceFactory>(t => container.ResolveAll(t));
-
             var mediator = container.Resolve<IMediator>();
             return container;
         }
